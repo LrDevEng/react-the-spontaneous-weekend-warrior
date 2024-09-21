@@ -1,9 +1,4 @@
-import { useState } from 'react';
-
-function DateTimePicker() {
-  const [date, setDate] = useState('2024-06-06');
-  const [time, setTime] = useState('08:00');
-
+function DateTimePicker({ date, setDate, time, setTime }) {
   return (
     <div>
       <input
