@@ -1,11 +1,11 @@
 import './App.css';
-import DateTimePicker from './components/DateTimePicker';
+import CountDownTimer from './components/CountDownTimer';
 
 export default function App() {
   return (
     <div className="App">
       <main>
-        <DateTimePicker />
+        <CountDownTimer />
       </main>
     </div>
   );
