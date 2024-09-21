@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import DateTimePicker from './DateTimePicker';
 
 function CountDownTimer() {
-  const [targetDate, setTargetDate] = useState('2024-06-06');
-  const [targetTime, setTargetTime] = useState('08:00');
+  const loadingDate = new Date(Date.now());
+  const [targetDate, setTargetDate] = useState('2024-09-21');
+  const [targetTime, setTargetTime] = useState('14:00');
 
-  const [timerValue, setTimerValue] = useState(0);
+  const [timerValue, setTimerValue] = useState(-1);
 
   useEffect(() => {
     if (timerValue > 0) {
@@ -13,15 +14,23 @@ function CountDownTimer() {
         setTimerValue((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(interval);
+    } else if (timerValue === 0) {
+      console.log('Timer elapsed.');
     }
   }, [timerValue]);
 
   function start() {
-    setTimerValue(1000);
+    const dateNow = new Date(Date.now());
+    const dateTarget = new Date(`${targetDate}T${targetTime}:00`);
+    const diffInSeconds = Math.floor((dateTarget - dateNow) / 1000);
+
+    if (diffInSeconds > 0) {
+      setTimerValue(Math.floor((dateTarget - dateNow) / 1000));
+    }
   }
 
   function stop() {
-    setTimerValue(0);
+    setTimerValue(-1);
   }
 
   return (
@@ -32,7 +41,7 @@ function CountDownTimer() {
         time={targetTime}
         setTime={setTargetTime}
       />
-      {timerValue === 0 && <button onClick={start}>Start Countdown</button>}
+      {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
       {timerValue > 0 && <button onClick={stop}>Stop</button>}
       <p>{timerValue}</p>
     </div>
