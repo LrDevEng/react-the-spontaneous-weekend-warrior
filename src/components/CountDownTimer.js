@@ -3,6 +3,8 @@ import { parseSecondsToTfs } from '../utils/Parsers';
 import DateTimePicker from './DateTimePicker';
 import Map from './Map';
 
+const openWeatherMapApiKey = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
+
 function CountDownTimer() {
   // --- Map Definition -----------------------------------------------
   const [center, setCenter] = useState({
@@ -11,13 +13,29 @@ function CountDownTimer() {
   });
   // --- End of Map Definition ----------------------------------------
 
+  // --- Weather Api Definition ---------------------------------------
+  const [weather, setWeather] = useState({
+    weather: [{ main: 'Not available' }],
+  });
+  useEffect(() => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${center.lng}&appid=${openWeatherMapApiKey}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setWeather(data);
+      })
+      .catch((error) => console.log(error));
+  }, [center]);
+  // --- End of Weather Api Definition --------------------------------
+
   // --- Timer Definition ---------------------------------------------
   const loadingDate = new Date(Date.now());
   const [targetDate, setTargetDate] = useState('2024-09-21');
   const [targetTime, setTargetTime] = useState('14:00');
 
   const [timerValue, setTimerValue] = useState(-1);
-
   useEffect(() => {
     if (timerValue > 0) {
       const interval = setInterval(() => {
@@ -56,6 +74,7 @@ function CountDownTimer() {
       {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
       {timerValue > 0 && <button onClick={stop}>Stop</button>}
       <p>{parseSecondsToTfs(timerValue)}</p>
+      <p>{weather.weather[0].main}</p>
       <Map center={center} zoom={13} popUp="The Social Hub" />
     </div>
   );
