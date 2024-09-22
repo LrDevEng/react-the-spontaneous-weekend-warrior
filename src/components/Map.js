@@ -1,16 +1,27 @@
 import 'leaflet/dist/leaflet.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 
 function Map() {
   const mapRef = useRef(null);
-  const latViennaSocialHub = 48.22344054136225;
-  const longViennaSocialHub = 16.390087610396407;
+
+  function set() {
+    mapRef.current.setView(
+      {
+        lat: 46.22344054136225,
+        lng: 14.390087610396407,
+      },
+      13,
+    );
+  }
 
   return (
-    <div style={{ height: '200px' }}>
+    <>
       <MapContainer
-        center={[latViennaSocialHub, longViennaSocialHub]}
+        center={{
+          lat: 48.22344054136225,
+          lng: 16.390087610396407,
+        }}
         zoom={13}
         ref={mapRef}
         style={{ height: '400px', width: '100vw' }}
@@ -21,7 +32,8 @@ function Map() {
         />
         {/* Additional map layers or components can be added here */}
       </MapContainer>
-    </div>
+      <button onClick={set}>Set</button>
+    </>
   );
 }
 

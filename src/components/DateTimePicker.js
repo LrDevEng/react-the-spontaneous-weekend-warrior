@@ -1,3 +1,4 @@
+// Component containig one html input element for setting a date and one html input element for setting a time
 function DateTimePicker({ date, setDate, time, setTime }) {
   return (
     <div>
