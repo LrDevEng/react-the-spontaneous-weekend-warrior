@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { parseSecondsToTfs } from '../utils/Parsers';
 import DateTimePicker from './DateTimePicker';
 
 function CountDownTimer() {
@@ -43,7 +44,7 @@ function CountDownTimer() {
       />
       {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
       {timerValue > 0 && <button onClick={stop}>Stop</button>}
-      <p>{timerValue}</p>
+      <p>{parseSecondsToTfs(timerValue)}</p>
     </div>
   );
 }
