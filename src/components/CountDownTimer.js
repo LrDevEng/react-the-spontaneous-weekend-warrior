@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { parseSecondsToTfs } from '../utils/Parsers';
+import { parseDateToTfs, parseSecondsToTfs } from '../utils/Parsers';
 import DateTimePicker from './DateTimePicker';
 import Map from './Map';
 
@@ -31,9 +31,9 @@ function CountDownTimer() {
   // --- End of Weather Api Definition --------------------------------
 
   // --- Timer Definition ---------------------------------------------
-  const loadingDate = new Date(Date.now());
-  const [targetDate, setTargetDate] = useState('2024-09-21');
-  const [targetTime, setTargetTime] = useState('14:00');
+  const loadingDate = parseDateToTfs(new Date(Date.now()));
+  const [targetDate, setTargetDate] = useState(loadingDate[0]);
+  const [targetTime, setTargetTime] = useState(loadingDate[1]);
 
   const [timerValue, setTimerValue] = useState(-1);
   useEffect(() => {
