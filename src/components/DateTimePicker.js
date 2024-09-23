@@ -2,6 +2,7 @@
 function DateTimePicker({ date, setDate, time, setTime }) {
   return (
     <div>
+      {/* Date picker */}
       <input
         type="date"
         value={date}
@@ -9,6 +10,7 @@ function DateTimePicker({ date, setDate, time, setTime }) {
           setDate(event.currentTarget.value);
         }}
       />
+      {/* Time picker */}
       <input
         type="time"
         value={time}

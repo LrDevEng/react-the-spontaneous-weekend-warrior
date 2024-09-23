@@ -7,6 +7,7 @@ const openWeatherMapApiKey = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
 
 function CountDownTimer() {
   // --- Map Definition -----------------------------------------------
+  // Inital state The Social Hub Vienna
   const [center, setCenter] = useState({
     lat: 48.223415757807906,
     lng: 16.390110631145077,
@@ -32,10 +33,12 @@ function CountDownTimer() {
 
   // --- Timer Definition ---------------------------------------------
   const loadingDate = parseDateToTfs(new Date(Date.now()));
-  const [targetDate, setTargetDate] = useState(loadingDate[0]);
-  const [targetTime, setTargetTime] = useState(loadingDate[1]);
-
+  const [targetDate, setTargetDate] = useState(loadingDate.date);
+  const [targetTime, setTargetTime] = useState(loadingDate.time);
   const [timerValue, setTimerValue] = useState(-1);
+
+  // Attach interval on change of timerValue
+  // Effect will reduce timer value every second until it reaches a value of 0
   useEffect(() => {
     if (timerValue > 0) {
       const interval = setInterval(() => {
@@ -48,6 +51,8 @@ function CountDownTimer() {
     }
   }, [timerValue]);
 
+  // Set timer to delta between current and target date
+  // Start timer
   function start() {
     const dateNow = new Date(Date.now());
     const dateTarget = new Date(`${targetDate}T${targetTime}:00`);
@@ -55,9 +60,14 @@ function CountDownTimer() {
 
     if (diffInSeconds > 0) {
       setTimerValue(Math.floor((dateTarget - dateNow) / 1000));
+    } else {
+      alert(
+        'Please enter a point in time in the future to start the countdown. \n\nThank you.',
+      );
     }
   }
 
+  // Stop timer
   function stop() {
     setTimerValue(-1);
   }
@@ -73,7 +83,7 @@ function CountDownTimer() {
       />
       {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
       {timerValue > 0 && <button onClick={stop}>Stop</button>}
-      <p>{parseSecondsToTfs(timerValue)}</p>
+      <p>{parseSecondsToTfs(timerValue).seconds}</p>
       <p>{weather.weather[0].main}</p>
       <Map center={center} zoom={13} popUp="The Social Hub" />
     </div>

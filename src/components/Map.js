@@ -15,6 +15,7 @@ L.Marker.prototype.options.icon = defaultIcon;
 function Map({ center, zoom, popUp }) {
   const mapRef = useRef(null);
 
+  // Set center and zoom of map every time they change
   useEffect(() => {
     try {
       mapRef.current.setView(center, zoom);
