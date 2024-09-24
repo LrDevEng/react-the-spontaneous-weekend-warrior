@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { computeRandomDestination } from '../utils/GeoData';
 import { parseDateToTfs, parseSecondsToTfs } from '../utils/Parsers';
 import DateTimePicker from './DateTimePicker';
 import Map from './Map';
@@ -46,7 +47,16 @@ function CountDownTimer() {
       }, 1000);
       return () => clearInterval(interval);
     } else if (timerValue === 0) {
-      setCenter({ lat: 47.223415757807906, lng: 15.390110631145077 });
+      setCenter(
+        computeRandomDestination(
+          {
+            lat: 48.223415757807906,
+            lng: 16.390110631145077,
+          },
+          50,
+          10,
+        ),
+      );
       console.log('Timer elapsed.');
     }
   }, [timerValue]);
