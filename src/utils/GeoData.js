@@ -17,8 +17,6 @@ export function computeRandomDestination(
     randomBearing,
   );
 
-  console.log(randomDestination);
-
   return {
     lat: randomDestination.latitude,
     lng: randomDestination.longitude,

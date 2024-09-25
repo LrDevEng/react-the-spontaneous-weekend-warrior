@@ -9,6 +9,8 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 const defaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
+  iconSize: [24, 36],
+  iconAnchor: [12, 36],
 });
 L.Marker.prototype.options.icon = defaultIcon;
 
