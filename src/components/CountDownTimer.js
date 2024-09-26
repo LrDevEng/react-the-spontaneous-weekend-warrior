@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { parseDateToTfs, parseSecondsToTfs } from '../utils/Parsers';
 import DateTimePicker from './DateTimePicker';
 
-function CountDownTimer({ handleElapsedTimer }) {
+function CountDownTimer({ handleElapsedTimer, handleTimerStart }) {
   const loadingDate = parseDateToTfs(new Date(Date.now()));
   const [targetDate, setTargetDate] = useState(loadingDate.date);
   const [targetTime, setTargetTime] = useState(loadingDate.time);
@@ -17,8 +17,8 @@ function CountDownTimer({ handleElapsedTimer }) {
       }, 1000);
       return () => clearInterval(interval);
     } else if (timerValue === 0) {
+      setTimerValue(-1);
       handleElapsedTimer();
-      // console.log('Timer elapsed.');
     }
   }, [timerValue, handleElapsedTimer]);
 
@@ -31,6 +31,7 @@ function CountDownTimer({ handleElapsedTimer }) {
 
     if (diffInSeconds > 0) {
       setTimerValue(Math.floor((dateTarget - dateNow) / 1000));
+      handleTimerStart();
     } else {
       alert(
         'Please enter a point in time in the future to start the countdown. \n\nThank you.',
