@@ -1,0 +1,24 @@
+.weather {
+  width: fit-content;
+  margin: 1.5rem auto 1.5rem auto;
+
+  table,
+  th,
+  td {
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  table {
+    min-width: 400px;
+  }
+
+  th,
+  td {
+    padding: 0.25rem;
+  }
+
+  td {
+    text-align: start;
+  }
+}

@@ -1,5 +1,6 @@
 import { computeDestinationPoint } from 'geolib';
 
+// Function to compute random destination based on a given location and minimum and maximum Radius
 export function computeRandomDestination(
   startingDestination,
   maxDist,

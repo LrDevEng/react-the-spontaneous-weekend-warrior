@@ -1,0 +1,21 @@
+.countDown {
+  width: fit-content;
+  margin: 1.5rem auto 1rem auto;
+
+  input {
+    font-size: 1.25rem;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 8px;
+    padding: 0.25rem;
+  }
+
+  button {
+    margin: 8px;
+    font-size: 1.25rem;
+    width: 200px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 0.25rem;
+  }
+}

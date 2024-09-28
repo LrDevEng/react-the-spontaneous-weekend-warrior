@@ -4,6 +4,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { useEffect, useRef } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import styles from '../styles/Map.module.css';
 
 // Set up the default icon for markers
 const defaultIcon = L.icon({
@@ -14,7 +15,7 @@ const defaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = defaultIcon;
 
-function Map({ center, zoom, popUp }) {
+function Map({ center, zoom, popUp, align }) {
   const mapRef = useRef(null);
 
   // Set center and zoom of map every time they change
@@ -24,14 +25,14 @@ function Map({ center, zoom, popUp }) {
     } catch (error) {
       console.log(error);
     }
-  }, [center, zoom]);
+  }, [center, zoom, align]);
 
   return (
     <MapContainer
+      className={styles.map}
       center={center}
       zoom={zoom}
       ref={mapRef}
-      style={{ height: '400px', width: '100vw' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

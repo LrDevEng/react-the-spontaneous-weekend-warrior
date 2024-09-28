@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
+import styles from '../styles/CountDownTimer.module.css';
 import { parseDateToTfs, parseSecondsToTfs } from '../utils/Parsers';
+import CountDownCard from './CountDownCard';
 import DateTimePicker from './DateTimePicker';
 
-function CountDownTimer({ handleElapsedTimer, handleTimerStart }) {
+function CountDownTimer({
+  handleElapsedTimer,
+  handleTimerStart,
+  handleTimerReset,
+}) {
   const loadingDate = parseDateToTfs(new Date(Date.now()));
   const [targetDate, setTargetDate] = useState(loadingDate.date);
   const [targetTime, setTargetTime] = useState(loadingDate.time);
@@ -42,10 +48,12 @@ function CountDownTimer({ handleElapsedTimer, handleTimerStart }) {
   // Stop timer
   function stop() {
     setTimerValue(-1);
+    handleTimerReset();
   }
 
   return (
-    <div>
+    <div className={styles.countDown}>
+      <CountDownCard time={parseSecondsToTfs(timerValue)} />
       <DateTimePicker
         date={targetDate}
         setDate={setTargetDate}
@@ -53,8 +61,7 @@ function CountDownTimer({ handleElapsedTimer, handleTimerStart }) {
         setTime={setTargetTime}
       />
       {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
-      {timerValue > 0 && <button onClick={stop}>Stop</button>}
-      <p>{parseSecondsToTfs(timerValue).seconds}</p>
+      {timerValue > 0 && <button onClick={stop}>Reset</button>}
     </div>
   );
 }

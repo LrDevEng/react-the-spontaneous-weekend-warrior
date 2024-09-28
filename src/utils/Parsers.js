@@ -34,3 +34,7 @@ export function parseDateToTfs(date) {
     time: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`,
   };
 }
+
+export function kelvinToCelcius(kelvin) {
+  return kelvin - 273.15;
+}
