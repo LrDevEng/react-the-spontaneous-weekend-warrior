@@ -1,15 +1,18 @@
 .card {
-  margin: 1.5rem;
+  margin: 1rem;
 
   table,
   th,
   td {
-    border: 2px solid black;
+    border: 2px solid var(--color-green-dark);
     border-radius: 5px;
+    background-color: var(--color-yellow-medium);
+    color: var(--color-green-dark);
   }
 
   table {
     min-width: 400px;
+    background-color: var(--color-green-light);
   }
 
   th,

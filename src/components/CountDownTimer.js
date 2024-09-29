@@ -54,14 +54,16 @@ function CountDownTimer({
   return (
     <div className={styles.countDown}>
       <CountDownCard time={parseSecondsToTfs(timerValue)} />
-      <DateTimePicker
-        date={targetDate}
-        setDate={setTargetDate}
-        time={targetTime}
-        setTime={setTargetTime}
-      />
-      {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
-      {timerValue > 0 && <button onClick={stop}>Reset</button>}
+      <div className={styles.picker}>
+        <DateTimePicker
+          date={targetDate}
+          setDate={setTargetDate}
+          time={targetTime}
+          setTime={setTargetTime}
+        />
+        {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
+        {timerValue > 0 && <button onClick={stop}>Reset</button>}
+      </div>
     </div>
   );
 }

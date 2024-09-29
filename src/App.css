@@ -15,4 +15,40 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+
+  h5 {
+    margin: 1.5rem auto 1.5rem auto;
+    max-width: 70ch;
+    line-height: 1.25rem;
+  }
+}
+
+.Responsive {
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.Attribution {
+  flex: 1;
+  width: 100%;
+  text-align: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+  div {
+    color: var(--color-yellow-light);
+    font-size: 0.75rem;
+    margin: 0.5rem;
+
+    a {
+      color: var(--color-yellow-light);
+    }
+  }
 }

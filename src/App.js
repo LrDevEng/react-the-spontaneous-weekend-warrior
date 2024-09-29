@@ -50,24 +50,35 @@ export default function App() {
       </header>
       <main className="Main">
         <section>
-          <h3>
-            Generate a random destination for your next adventure. <br /> Choose
-            a date, time and distance and start the countdown!
-          </h3>
-          <CountDownTimer
-            handleElapsedTimer={handleElapsedTimer}
-            handleTimerStart={handleTimerStart}
-            handleTimerReset={handleTimerReset}
-          />
-          <DestinationForm
-            minDist={minDist}
-            setMinDist={setMinDist}
-            maxDist={maxDist}
-            setMaxDist={setMaxDist}
-            disabled={disableDestForm}
-          />
-          <Weather center={center} />
+          <h5>
+            Choose a date, time and distance for your next adventure and start
+            the timer. When the countdown hits 0 you will be presented with a
+            random destination to visit on the map.
+          </h5>
+          <div className="Responsive">
+            <div>
+              <CountDownTimer
+                handleElapsedTimer={handleElapsedTimer}
+                handleTimerStart={handleTimerStart}
+                handleTimerReset={handleTimerReset}
+              />
+              <DestinationForm
+                minDist={minDist}
+                setMinDist={setMinDist}
+                maxDist={maxDist}
+                setMaxDist={setMaxDist}
+                disabled={disableDestForm}
+              />
+            </div>
+            <Weather center={center} />
+          </div>
         </section>
+        <div className="Attribution">
+          <div>
+            Background designed by{' '}
+            <a href="https://www.freepik.com/">Freepik</a>
+          </div>
+        </div>
         <section className="Map">
           <Map
             center={center}
