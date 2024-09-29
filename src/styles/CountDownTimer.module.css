@@ -1,0 +1,52 @@
+.countDown {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto 1rem auto;
+
+  input {
+    font-size: 1.25rem;
+    border: 2px solid var(--color-green-dark);
+    border-radius: 5px;
+    padding: 0.25rem;
+    margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+    background-color: var(--color-yellow-medium);
+    color: var(--color-green-medium);
+
+    &:focus {
+      background-color: var(--color-yellow-light);
+      color: var(--color-green-medium-dark);
+      outline: none;
+    }
+  }
+
+  button {
+    margin: 0.25rem 0 0.25rem 0;
+    font-size: 1.25rem;
+    width: 200px;
+    border: 2px solid var(--color-green-dark);
+    border-radius: 5px;
+    padding: 0.25rem;
+    color: var(--color-green-medium);
+    background-color: var(--color-yellow-medium);
+
+    &:hover {
+      background-color: var(--color-yellow-light);
+      color: var(--color-green-medium-dark);
+    }
+
+    &:active {
+      background-color: var(--color-green-medium-light);
+      color: var(--color-green-medium-dark);
+    }
+  }
+
+  .picker {
+    border: 2px solid var(--color-green-dark);
+    border-radius: 5px;
+    background-color: var(--color-green-light);
+    width: 400px;
+  }
+}

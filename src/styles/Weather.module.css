@@ -1,0 +1,31 @@
+.weather {
+  width: fit-content;
+  margin: 1rem auto 1rem auto;
+
+  @media (max-width: 960px) {
+    margin: 0 auto 1rem auto;
+  }
+
+  table,
+  th,
+  td {
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: var(--color-yellow-medium);
+    color: var(--color-green-dark);
+  }
+
+  table {
+    background-color: var(--color-green-light);
+    min-width: 400px;
+  }
+
+  th,
+  td {
+    padding: 0.25rem;
+  }
+
+  td {
+    text-align: start;
+  }
+}

@@ -1,0 +1,5 @@
+.map {
+  width: 100vw;
+  height: 400px;
+  border-top: 0.25rem solid var(--color-green-dark);
+}
