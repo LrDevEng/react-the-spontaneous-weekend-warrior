@@ -19,4 +19,4 @@ Make memories of a lifetime. <br>
 
 # The Spontaneous Weeken Warrior
 
-![image](https://github.com/user-attachments/assets/efa0c1b4-5f82-4e30-97fe-088924e0eb8f)
+![image](https://github.com/user-attachments/assets/4fd204ed-b5f6-4256-bac3-3eb96d375754)
