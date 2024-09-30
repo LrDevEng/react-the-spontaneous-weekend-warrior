@@ -17,6 +17,6 @@ Enjoy your spontanous trip. <br>
 Explore destinations your would have never gone to before. <br>
 Make memories of a lifetime. <br>
 
-# The Spontaneous Weeken Warrior
+# The Spontaneous Weekend Warrior
 
 ![image](https://github.com/user-attachments/assets/4fd204ed-b5f6-4256-bac3-3eb96d375754)
