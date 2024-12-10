@@ -46,7 +46,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="Header">
-        <h1>The Spontanious Weekend Warrior</h1>
+        <h1>The Spontaneous Weekend Warrior</h1>
       </header>
       <main className="Main">
         <section>
