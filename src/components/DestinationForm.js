@@ -14,6 +14,7 @@ function DestinationForm({
           Minimum distance
           <input
             type="number"
+            min="0"
             value={minDist}
             onChange={(event) => setMinDist(event.currentTarget.value)}
             disabled={disabled}
@@ -24,6 +25,7 @@ function DestinationForm({
           Maximum distance
           <input
             type="number"
+            min="0"
             value={maxDist}
             onChange={(event) => setMaxDist(event.currentTarget.value)}
             disabled={disabled}

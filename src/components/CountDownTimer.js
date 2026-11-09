@@ -12,31 +12,44 @@ function CountDownTimer({
   const loadingDate = parseDateToTfs(new Date(Date.now()));
   const [targetDate, setTargetDate] = useState(loadingDate.date);
   const [targetTime, setTargetTime] = useState(loadingDate.time);
+  // Timestamp (ms) at which the running countdown ends, null when no countdown is running
+  const [endTime, setEndTime] = useState(/** @type {number | null} */ (null));
   const [timerValue, setTimerValue] = useState(-1);
 
-  // Attach interval on change of timerValue
-  // Effect will reduce timer value every second until it reaches a value of 0
+  // While a countdown is running, recompute the remaining seconds from the end time on every tick.
+  // Deriving the value from the clock (instead of decrementing a counter) keeps the countdown
+  // accurate even when the browser throttles timers in background tabs.
   useEffect(() => {
-    if (timerValue > 0) {
-      const interval = setInterval(() => {
-        setTimerValue((prevTimerValue) => prevTimerValue - 1);
-      }, 1000);
-      return () => clearInterval(interval);
-    } else if (timerValue === 0) {
-      setTimerValue(-1);
-      handleElapsedTimer();
+    if (endTime === null) return;
+
+    let elapsed = false;
+
+    function tick() {
+      // Guard so the elapsed callback runs only once: the interval is cleared by the
+      // effect cleanup after setEndTime(null) re-renders, a tick may still fire before that
+      if (elapsed) return;
+      const remaining = Math.ceil((endTime - Date.now()) / 1000);
+      if (remaining <= 0) {
+        elapsed = true;
+        setEndTime(null);
+        setTimerValue(-1);
+        handleElapsedTimer();
+      } else {
+        setTimerValue(remaining);
+      }
     }
-  }, [timerValue, handleElapsedTimer]);
 
-  // Set timer to delta between current and target date
-  // Start timer
+    const interval = setInterval(tick, 1000);
+    tick();
+    return () => clearInterval(interval);
+  }, [endTime, handleElapsedTimer]);
+
+  // Set end time to the target date and start the countdown
   function start() {
-    const dateNow = new Date(Date.now());
     const dateTarget = new Date(`${targetDate}T${targetTime}:00`);
-    const diffInSeconds = Math.floor((dateTarget - dateNow) / 1000);
 
-    if (diffInSeconds > 0) {
-      setTimerValue(Math.floor((dateTarget - dateNow) / 1000));
+    if (dateTarget.getTime() - Date.now() >= 1000) {
+      setEndTime(dateTarget.getTime());
       handleTimerStart();
     } else {
       alert(
@@ -47,9 +60,12 @@ function CountDownTimer({
 
   // Stop timer
   function stop() {
+    setEndTime(null);
     setTimerValue(-1);
     handleTimerReset();
   }
+
+  const isRunning = endTime !== null;
 
   return (
     <div className={styles.countDown}>
@@ -60,9 +76,10 @@ function CountDownTimer({
           setDate={setTargetDate}
           time={targetTime}
           setTime={setTargetTime}
+          disabled={isRunning}
         />
-        {timerValue <= 0 && <button onClick={start}>Start Countdown</button>}
-        {timerValue > 0 && <button onClick={stop}>Reset</button>}
+        {!isRunning && <button onClick={start}>Start Countdown</button>}
+        {isRunning && <button onClick={stop}>Reset</button>}
       </div>
     </div>
   );

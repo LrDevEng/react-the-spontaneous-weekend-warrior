@@ -24,10 +24,17 @@ export default function App() {
 
   // Callback function triggered when timer elapses
   const handleElapsedTimer = useCallback(() => {
-    // Set maximum distance to minimum distance in case it is smaller than the minimum distance
-    const maxDistChecked = Math.max(maxDist, minDist);
-    setCenter((prevCenter) =>
-      computeRandomDestination(prevCenter, maxDistChecked, minDist),
+    // Input values are strings: parse them, treat empty/invalid/negative as 0
+    // and raise the maximum to the minimum in case it is smaller
+    const minDistChecked = Math.max(Number(minDist) || 0, 0);
+    const maxDistChecked = Math.max(Number(maxDist) || 0, minDistChecked);
+    // Always start from the fixed start location so destinations don't drift
+    setCenter(
+      computeRandomDestination(
+        startLocation.coordinates,
+        maxDistChecked,
+        minDistChecked,
+      ),
     );
     setDisableDestForm(false);
     setPopUp('Your Destination');
@@ -39,14 +46,14 @@ export default function App() {
 
   function handleTimerReset() {
     setCenter(startLocation.coordinates);
-    setPopUp(startLocation.popUp);
+    setPopUp(startLocation.name);
     setDisableDestForm(false);
   }
 
   return (
     <div className="App">
       <header className="Header">
-        <h1>The Spontanious Weekend Warrior</h1>
+        <h1>The Spontaneous Weekend Warrior</h1>
       </header>
       <main className="Main">
         <section>
