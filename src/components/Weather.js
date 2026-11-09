@@ -26,6 +26,16 @@ function Weather({ center }) {
     return <div>Loading ...</div>;
   }
 
+  // The API returns an error object (e.g. { cod: 401, message: '...' })
+  // instead of weather data when the request fails
+  if (!weather.weather || !weather.main) {
+    return (
+      <div className={styles.weather}>
+        Weather unavailable: {weather.message || 'unknown error'}
+      </div>
+    );
+  }
+
   return (
     <div className={styles.weather}>
       <table>
