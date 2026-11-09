@@ -24,7 +24,7 @@ Tooling comes from UpLeveled presets: `@upleveled/react-scripts` (a maintained f
 
 ## Environment
 
-`REACT_APP_OPEN_WEATHER_MAP_API_KEY` is required for weather data. Put it in `.env.local` (gitignored); `.env` is **not** gitignored. CRA reads env files only at dev-server start and inlines `REACT_APP_*` values into the client bundle.
+`REACT_APP_OPEN_WEATHER_MAP_API_KEY` is required for weather data. Put it in `.env.local` (gitignored). CRA reads env files only at dev-server start and inlines `REACT_APP_*` values into the client bundle.
 
 ## Architecture
 
