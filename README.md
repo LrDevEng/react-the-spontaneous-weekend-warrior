@@ -12,7 +12,8 @@ Start your journey at: https://lrdeveng-spontaneous-weekend-warrior.netlify.app/
 
 As soon as the countdown elapses, the application will present a random destination on the map for you to visit (4). For the perfect last minute preparation the latest weather updates are received from the openweathermap.org API (5).
 
-***
+---
+
 Enjoy your spontanous trip. <br>
 Explore destinations your would have never gone to before. <br>
 Make memories of a lifetime. <br>

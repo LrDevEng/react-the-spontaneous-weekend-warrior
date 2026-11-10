@@ -7,8 +7,7 @@ export function computeRandomDestination(
   maxDist,
   minDist,
 ) {
-  const randomDistance =
-    (minDist + Math.random() * (maxDist - minDist)) * 1000;
+  const randomDistance = (minDist + Math.random() * (maxDist - minDist)) * 1000;
   const randomBearing = Math.random() * 360;
 
   const randomDestination = computeDestinationPoint(
