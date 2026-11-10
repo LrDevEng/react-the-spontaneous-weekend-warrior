@@ -4,9 +4,15 @@ import CountDownTimer from './components/CountDownTimer';
 import DestinationForm from './components/DestinationForm';
 import Map from './components/Map';
 import Weather from './components/Weather';
+import type { Coordinates } from './types';
 import { computeRandomDestination } from './utils/GeoData';
 
-const startLocation = {
+type NamedLocation = {
+  coordinates: Coordinates;
+  name: string;
+};
+
+const startLocation: NamedLocation = {
   coordinates: {
     lat: 48.223415757807906,
     lng: 16.390110631145077,
@@ -16,9 +22,10 @@ const startLocation = {
 
 export default function App() {
   // State for location: Initial position 'The Social Hub Vienna'
-  const [center, setCenter] = useState(startLocation.coordinates);
-  const [minDist, setMinDist] = useState(10);
-  const [maxDist, setMaxDist] = useState(50);
+  const [center, setCenter] = useState<Coordinates>(startLocation.coordinates);
+  // Distances in km: numbers initially, the raw input strings after an edit
+  const [minDist, setMinDist] = useState<string | number>(10);
+  const [maxDist, setMaxDist] = useState<string | number>(50);
   const [disableDestForm, setDisableDestForm] = useState(false);
   const [popUp, setPopUp] = useState(startLocation.name);
 

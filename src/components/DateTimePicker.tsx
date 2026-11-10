@@ -1,5 +1,13 @@
+type Props = {
+  date: string;
+  setDate: (date: string) => void;
+  time: string;
+  setTime: (time: string) => void;
+  disabled: boolean;
+};
+
 // Component containig one html input element for setting a date and one html input element for setting a time
-function DateTimePicker({ date, setDate, time, setTime, disabled }) {
+function DateTimePicker({ date, setDate, time, setTime, disabled }: Props) {
   return (
     <div>
       {/* Date picker */}

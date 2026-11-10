@@ -1,12 +1,22 @@
 import styles from '../styles/DestinationForm.module.css';
 
+type Props = {
+  // Distances in km: App's initial state holds numbers, after an edit the raw
+  // input strings (possibly empty or invalid)
+  minDist: string | number;
+  setMinDist: (minDist: string) => void;
+  maxDist: string | number;
+  setMaxDist: (maxDist: string) => void;
+  disabled: boolean;
+};
+
 function DestinationForm({
   minDist,
   setMinDist,
   maxDist,
   setMaxDist,
   disabled,
-}) {
+}: Props) {
   return (
     <div className={styles.destination}>
       <div className={styles.center}>

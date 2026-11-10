@@ -1,11 +1,16 @@
+import type { CountDownTime, DateTimeInput } from '../types';
+
 const secondsPerDay = 60 * 60 * 24;
 const secondsPerHour = 60 * 60;
 const secondsPerMinute = 60;
 
 // Function to parse seconds to time format string {day: <DD..>, hours: <HH>, minutes: <MM>, seconds: <SS>}
-export function parseSecondsToTfs(sec) {
-  sec = Number(sec);
-
+// NOTE: only meant for whole, non-negative seconds and -1 (idle countdown,
+// every field becomes '-1'). Other negative inputs give mixed results (floor of
+// negatives, -0 printed as '00', e.g. -60 -> '-1', '-1', '-1', '00') and
+// fractional seconds are kept in the seconds field (61.5 -> seconds '1.5');
+// this is the current behavior and kept as is.
+export function parseSecondsToTfs(sec: number): CountDownTime {
   const days = Math.floor(sec / secondsPerDay);
   const hours = Math.floor((sec % secondsPerDay) / secondsPerHour);
   const minutes = Math.floor(
@@ -22,7 +27,7 @@ export function parseSecondsToTfs(sec) {
 }
 
 // Function to parse date to time format string {date: <YYYY-MM-DD>, time: <HH:MM>}
-export function parseDateToTfs(date) {
+export function parseDateToTfs(date: Date): DateTimeInput {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -35,6 +40,6 @@ export function parseDateToTfs(date) {
   };
 }
 
-export function kelvinToCelcius(kelvin) {
+export function kelvinToCelcius(kelvin: number): number {
   return kelvin - 273.15;
 }

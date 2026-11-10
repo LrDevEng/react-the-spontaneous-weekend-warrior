@@ -1,15 +1,31 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/Weather.module.css';
+import type { Coordinates, WeatherApiResponse } from '../types';
 import { kelvinToCelcius } from '../utils/Parsers';
+import { isWeatherData } from '../utils/WeatherApi';
 
+// NOTE: not checked, a missing key ends up as `appid=undefined` in the URL
+// and the API answers with an error object
 const openWeatherMapApiKey = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
 
-function Weather({ center }) {
-  const [weather, setWeather] = useState({});
+// fetch() and res.json() reject with Error-like objects (Error, TypeError,
+// SyntaxError, DOMException); their name and message are read without
+// relying on a specific class
+type ErrorLike = { name?: unknown; message?: unknown };
+
+function isErrorLike(value: unknown): value is ErrorLike {
+  return typeof value === 'object' && value !== null;
+}
+
+type Props = {
+  center: Coordinates;
+};
+
+function Weather({ center }: Props) {
+  // Last API response, null until the first one arrives
+  const [weather, setWeather] = useState<WeatherApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [fetchError, setFetchError] = useState(
-    /** @type {string | null} */ (null),
-  );
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   // Fetch weather information from API when map location changes
   useEffect(() => {
@@ -23,19 +39,27 @@ function Weather({ center }) {
       `https://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${center.lng}&appid=${openWeatherMapApiKey}`,
       { signal: controller.signal },
     )
-      .then((res) => res.json())
+      // The body is either weather data or an API error object, told apart
+      // with isWeatherData() when rendering
+      .then((res) => res.json() as Promise<WeatherApiResponse>)
       .then((data) => {
         setWeather(data);
         setIsLoading(false);
       })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
+      .catch((error: unknown) => {
+        if (isErrorLike(error) && error.name === 'AbortError') return;
         console.log(error);
-        setFetchError(error.message);
+        setFetchError(
+          isErrorLike(error) && typeof error.message === 'string'
+            ? error.message
+            : null,
+        );
         setIsLoading(false);
       });
 
     return () => controller.abort();
+    // NOTE: keyed on the center object identity, a new object with equal
+    // coordinates refetches
   }, [center]);
 
   if (isLoading) {
@@ -50,21 +74,26 @@ function Weather({ center }) {
   }
 
   // The API returns an error object (e.g. { cod: 401, message: '...' })
-  // instead of weather data when the request fails
-  if (!weather.weather || !weather.main) {
+  // instead of weather data when the request fails.
+  // `||` on purpose: an empty message also falls back to 'unknown error'
+  if (!isWeatherData(weather)) {
     return (
       <div className={styles.weather}>
-        Weather unavailable: {weather.message || 'unknown error'}
+        Weather unavailable: {weather?.message || 'unknown error'}
       </div>
     );
   }
+
+  // NOTE: the API always sends at least one weather condition. Unlike the JS
+  // version, which crashed on an empty `weather` array, the cell stays empty
+  const description = weather.weather[0]?.description.toUpperCase();
 
   return (
     <div className={styles.weather}>
       <table>
         <tbody>
           <tr>
-            <th colSpan="2">Current weather in {weather.name}</th>
+            <th colSpan={2}>Current weather in {weather.name}</th>
           </tr>
           <tr>
             <td>Latitude</td>
@@ -76,7 +105,7 @@ function Weather({ center }) {
           </tr>
           <tr>
             <td>Weather</td>
-            <td>{weather.weather[0].description.toUpperCase()}</td>
+            <td>{description}</td>
           </tr>
           <tr>
             <td>Temperature °C</td>

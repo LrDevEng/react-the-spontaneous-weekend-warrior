@@ -4,16 +4,25 @@ import { parseDateToTfs, parseSecondsToTfs } from '../utils/Parsers';
 import CountDownCard from './CountDownCard';
 import DateTimePicker from './DateTimePicker';
 
+type Props = {
+  // Called once when the countdown reaches 0
+  handleElapsedTimer: () => void;
+  // Called when a countdown is started
+  handleTimerStart: () => void;
+  // Called when a running countdown is reset
+  handleTimerReset: () => void;
+};
+
 function CountDownTimer({
   handleElapsedTimer,
   handleTimerStart,
   handleTimerReset,
-}) {
+}: Props) {
   const loadingDate = parseDateToTfs(new Date(Date.now()));
   const [targetDate, setTargetDate] = useState(loadingDate.date);
   const [targetTime, setTargetTime] = useState(loadingDate.time);
   // Timestamp (ms) at which the running countdown ends, null when no countdown is running
-  const [endTime, setEndTime] = useState(/** @type {number | null} */ (null));
+  const [endTime, setEndTime] = useState<number | null>(null);
   const [timerValue, setTimerValue] = useState(-1);
 
   // While a countdown is running, recompute the remaining seconds from the end time on every tick.
@@ -21,6 +30,8 @@ function CountDownTimer({
   // accurate even when the browser throttles timers in background tabs.
   useEffect(() => {
     if (endTime === null) return;
+    // Narrowed copy for the tick closure
+    const end = endTime;
 
     let elapsed = false;
 
@@ -28,7 +39,7 @@ function CountDownTimer({
       // Guard so the elapsed callback runs only once: the interval is cleared by the
       // effect cleanup after setEndTime(null) re-renders, a tick may still fire before that
       if (elapsed) return;
-      const remaining = Math.ceil((endTime - Date.now()) / 1000);
+      const remaining = Math.ceil((end - Date.now()) / 1000);
       if (remaining <= 0) {
         elapsed = true;
         setEndTime(null);
