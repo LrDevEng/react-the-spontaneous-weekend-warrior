@@ -187,6 +187,26 @@ describe('Weather', () => {
       expect(rows()[0]).toEqual(['Current weather in Graz']);
     });
 
+    // NOTE: possible bug: an error with an empty message is falsy, so the
+    // component falls through to the previous (still valid) weather response
+    // and shows the old location's weather with the new coordinates
+    test('a network error with an empty message after a successful load shows the previous weather', async () => {
+      installFetchMock((url) =>
+        url.includes('lat=47')
+          ? new Error('')
+          : weatherResponse({ name: 'Vienna' }),
+      );
+      const { rerender } = render(<Weather center={vienna} />);
+      await flushPromises();
+      rerender(<Weather center={graz} />);
+      await flushPromises();
+      expect(rows().slice(0, 3)).toEqual([
+        ['Current weather in Vienna'],
+        ['Latitude', '47.0707'],
+        ['Longitude', '15.4395'],
+      ]);
+    });
+
     test('recovers from a network error on the next center', async () => {
       installFetchMock((url) =>
         url.includes('lat=47')
