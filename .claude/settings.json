@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_response.filePath // .tool_input.file_path // empty'); case \"$f\" in \"$CLAUDE_PROJECT_DIR\"/*) cd \"$CLAUDE_PROJECT_DIR\" && pnpm exec prettier --write --ignore-unknown \"$f\" >/dev/null 2>&1 ;; esac; exit 0",
+            "timeout": 30,
+            "statusMessage": "Formatting with Prettier…"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+pnpm-lock.yaml
+# Frozen pre-TypeScript reference code for the back-to-back tests
+src/__legacy__/
